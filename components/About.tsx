@@ -68,7 +68,10 @@ export default function About() {
                                     My interests lie in <span className="text-white font-medium">Computer Vision</span> and <span className="text-white font-medium">Deep Learning</span>, specifically pushing towards real-time inference and 3D reconstruction.
                                 </p>
                                 <p>
-                                    Currently, I am working as a Computer Vision Intern at <span className="text-white font-medium">Playar Inc.</span>, where I am building intelligent systems that interact with their environment.
+                                    Currently, I am working as a Computer Vision Intern at <span className="text-white font-medium">Playar Inc.</span>, where I build object detection and trajectory analysis software for sports simulators.
+                                </p>
+                                <p>
+                                    I am also developing an app with them that performs real-time trajectory analysis and ball tracking for sports.
                                 </p>
                             </div>
                         </div>
