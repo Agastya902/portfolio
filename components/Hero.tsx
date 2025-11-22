@@ -5,8 +5,7 @@ import { ArrowDown } from "lucide-react";
 
 export default function Hero() {
     return (
-        <section className="relative h-screen w-full overflow-hidden flex items-center justify-center">
-            {/* Video Background */}
+        <section className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-cyber-black">\n            {/* Video Background */}
             <video
                 autoPlay
                 loop

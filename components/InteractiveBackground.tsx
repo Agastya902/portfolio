@@ -32,15 +32,15 @@ export default function InteractiveBackground() {
         window.addEventListener("resize", resizeCanvas);
 
         // Initialize neural network nodes
-        const nodeCount = 50;
+        const nodeCount = 40; // Reduced for less clutter
         const nodes: Node[] = [];
 
         for (let i = 0; i < nodeCount; i++) {
             nodes.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5,
+                vx: (Math.random() - 0.5) * 0.2, // Reduced velocity for stability
+                vy: (Math.random() - 0.5) * 0.2,
                 connections: [],
             });
         }
@@ -52,7 +52,7 @@ export default function InteractiveBackground() {
                     const dx = node.x - other.x;
                     const dy = node.y - other.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    if (distance < 150 && node.connections.length < 3) {
+                    if (distance < 200 && node.connections.length < 4) { // Increased connection distance
                         node.connections.push(j);
                     }
                 }
@@ -70,30 +70,30 @@ export default function InteractiveBackground() {
 
         // Animation loop
         const animate = () => {
-            ctx.fillStyle = "rgba(2, 6, 23, 0.1)";
+            ctx.fillStyle = "rgba(2, 6, 23, 0.05)"; // Lighter fade for trails
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             const mouse = mouseRef.current;
 
             nodesRef.current.forEach((node, i) => {
-                // Mouse repulsion
+                // Mouse repulsion - reduced force
                 const dx = mouse.x - node.x;
                 const dy = mouse.y - node.y;
                 const distToMouse = Math.sqrt(dx * dx + dy * dy);
 
-                if (distToMouse < 200) {
-                    const force = (200 - distToMouse) / 200;
-                    node.vx -= (dx / distToMouse) * force * 0.5;
-                    node.vy -= (dy / distToMouse) * force * 0.5;
+                if (distToMouse < 250) {
+                    const force = (250 - distToMouse) / 250;
+                    node.vx -= (dx / distToMouse) * force * 0.15; // Reduced repulsion
+                    node.vy -= (dy / distToMouse) * force * 0.15;
                 }
 
                 // Update position
                 node.x += node.vx;
                 node.y += node.vy;
 
-                // Damping
-                node.vx *= 0.95;
-                node.vy *= 0.95;
+                // Damping - increased for more stability
+                node.vx *= 0.98;
+                node.vy *= 0.98;
 
                 // Boundaries with bounce
                 if (node.x < 0 || node.x > canvas.width) {
@@ -105,28 +105,28 @@ export default function InteractiveBackground() {
                     node.y = Math.max(0, Math.min(canvas.height, node.y));
                 }
 
-                // Draw connections
+                // Draw connections - lighter
                 node.connections.forEach((connectedIndex) => {
                     const other = nodesRef.current[connectedIndex];
                     const dx = other.x - node.x;
                     const dy = other.y - node.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
 
-                    if (distance < 200) {
-                        const opacity = 1 - distance / 200;
-                        ctx.strokeStyle = `rgba(0, 255, 159, ${opacity * 0.3})`;
+                    if (distance < 250) {
+                        const opacity = 1 - distance / 250;
+                        ctx.strokeStyle = `rgba(0, 255, 159, ${opacity * 0.15})`; // Much lighter
                         ctx.lineWidth = 1;
                         ctx.beginPath();
                         ctx.moveTo(node.x, node.y);
                         ctx.lineTo(other.x, other.y);
                         ctx.stroke();
 
-                        // Glow effect on active connections near mouse
-                        if (distToMouse < 150) {
-                            ctx.strokeStyle = `rgba(0, 255, 159, ${opacity * 0.6})`;
-                            ctx.lineWidth = 2;
-                            ctx.shadowBlur = 10;
-                            ctx.shadowColor = "rgba(0, 255, 159, 0.8)";
+                        // Glow effect on active connections near mouse - lighter
+                        if (distToMouse < 200) {
+                            ctx.strokeStyle = `rgba(0, 255, 159, ${opacity * 0.25})`; // Reduced glow
+                            ctx.lineWidth = 1.5;
+                            ctx.shadowBlur = 8;
+                            ctx.shadowColor = "rgba(0, 255, 159, 0.3)";
                             ctx.beginPath();
                             ctx.moveTo(node.x, node.y);
                             ctx.lineTo(other.x, other.y);
@@ -136,16 +136,16 @@ export default function InteractiveBackground() {
                     }
                 });
 
-                // Draw node
-                const nodeSize = distToMouse < 150 ? 4 : 2;
-                ctx.fillStyle = distToMouse < 150 ? "#00ff9f" : "rgba(0, 255, 159, 0.6)";
+                // Draw node - bigger
+                const nodeSize = distToMouse < 200 ? 5 : 3; // Bigger nodes
+                ctx.fillStyle = distToMouse < 200 ? "rgba(0, 255, 159, 0.8)" : "rgba(0, 255, 159, 0.4)"; // Lighter
                 ctx.beginPath();
                 ctx.arc(node.x, node.y, nodeSize, 0, Math.PI * 2);
                 ctx.fill();
 
-                if (distToMouse < 150) {
-                    ctx.shadowBlur = 15;
-                    ctx.shadowColor = "#00ff9f";
+                if (distToMouse < 200) {
+                    ctx.shadowBlur = 12;
+                    ctx.shadowColor = "rgba(0, 255, 159, 0.5)";
                     ctx.fill();
                     ctx.shadowBlur = 0;
                 }
