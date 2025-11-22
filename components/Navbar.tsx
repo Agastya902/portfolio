@@ -1,20 +1,61 @@
 "use client";
 
+import { useState, useEffect } from "react";
+
 export default function Navbar() {
+    const [activeSection, setActiveSection] = useState("");
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setActiveSection(entry.target.id);
+                    }
+                });
+            },
+            { threshold: 0.5 }
+        );
+
+        const sections = document.querySelectorAll("section[id]");
+        sections.forEach((section) => observer.observe(section));
+
+        return () => sections.forEach((section) => observer.unobserve(section));
+    }, []);
+
+    const scrollToSection = (id: string) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+        }
+    };
+
+    const navItems = [
+        { id: "about", label: "ABOUT" },
+        { id: "experience", label: "EXPERIENCE" },
+        { id: "projects", label: "PROJECTS" },
+        { id: "education", label: "TIMELINE" },
+        { id: "contact", label: "CONTACT" },
+    ];
+
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-cyber-black/80 backdrop-blur-md border-b border-cyber-green/20">
-            <div className="max-w-7xl mx-auto px-4 md:px-8 py-4">
-                <div className="flex justify-between items-center">
-                    <a href="#" className="text-xl font-bold font-heading text-transparent bg-clip-text bg-gradient-to-r from-cyber-green via-emerald-400 to-cyan-500">
-                        AS
-                    </a>
-                    <div className="flex gap-6 md:gap-8">
-                        <a href="#about" className="text-sm md:text-base font-medium text-transparent bg-clip-text bg-gradient-to-r from-cyber-green via-emerald-400 to-cyan-500 hover:from-emerald-400 hover:via-cyan-500 hover:to-cyber-green transition-all duration-300">About</a>
-                        <a href="#experience" className="text-sm md:text-base font-medium text-transparent bg-clip-text bg-gradient-to-r from-cyber-green via-emerald-400 to-cyan-500 hover:from-emerald-400 hover:via-cyan-500 hover:to-cyber-green transition-all duration-300">Experience</a>
-                        <a href="#projects" className="text-sm md:text-base font-medium text-transparent bg-clip-text bg-gradient-to-r from-cyber-green via-emerald-400 to-cyan-500 hover:from-emerald-400 hover:via-cyan-500 hover:to-cyber-green transition-all duration-300">Projects</a>
-                        <a href="#timeline" className="text-sm md:text-base font-medium text-transparent bg-clip-text bg-gradient-to-r from-cyber-green via-emerald-400 to-cyan-500 hover:from-emerald-400 hover:via-cyan-500 hover:to-cyber-green transition-all duration-300">Journey</a>
-                        <a href="#contact" className="text-sm md:text-base font-medium text-transparent bg-clip-text bg-gradient-to-r from-cyber-green via-emerald-400 to-cyan-500 hover:from-emerald-400 hover:via-cyan-500 hover:to-cyber-green transition-all duration-300">Contact</a>
-                    </div>
+        <nav className="fixed top-0 left-0 w-full z-40 bg-cyber-black/80 backdrop-blur-md border-b border-white/5">
+            <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+                <span className="text-xl font-bold font-heading tracking-wider text-white">
+                    AGASTYA<span className="text-cyber-green">.DEV</span>
+                </span>
+
+                <div className="hidden md:flex gap-8">
+                    {navItems.map((item) => (
+                        <button
+                            key={item.id}
+                            onClick={() => scrollToSection(item.id)}
+                            className={`text-sm font-mono tracking-widest transition-all duration-300 hover:text-cyber-green ${activeSection === item.id ? "text-cyber-green drop-shadow-[0_0_5px_rgba(0,255,159,0.5)]" : "text-gray-400"
+                                }`}
+                        >
+                            {item.label}
+                        </button>
+                    ))}
                 </div>
             </div>
         </nav>

@@ -8,6 +8,10 @@ import GlassCard from "@/components/GlassCard";
 import Modal from "@/components/Modal";
 import Timeline from "@/components/Timeline";
 import Contact from "@/components/Contact";
+import ScrollProgress from "@/components/ScrollProgress";
+import ScrollReveal from "@/components/ScrollReveal";
+import GlitchText from "@/components/GlitchText";
+import CustomCursor from "@/components/CustomCursor";
 
 type ModalContent = "playar" | "techmahindra" | "vertexplus" | "smartvision" | "intellirest" | null;
 
@@ -137,6 +141,8 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-cyber-black text-white selection:bg-cyber-green selection:text-cyber-black">
+      <ScrollProgress />
+      <CustomCursor />
       <Navbar />
       <Hero />
 
@@ -146,132 +152,134 @@ export default function Home() {
         <div className="max-w-6xl mx-auto space-y-20 relative z-10">
           {/* About Section */}
           <section id="about" className="scroll-mt-24">
-            <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
-              ABOUT ME
-            </h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              <GlassCard className="h-full">
-                <p className="text-lg leading-relaxed mb-4">
-                  I am a Computer Vision Engineer at UCSD, majoring in Math-Computer Science with a minor in Economics.
-                  My passion lies in decoding the visual world through algorithms, bridging the gap between mathematical theory and real-world perception.
-                </p>
-                <p className="text-lg leading-relaxed">
-                  I build systems that see, understand, and interact with their environment.
-                </p>
-              </GlassCard>
-              <div className="relative h-64 md:h-auto rounded-lg overflow-hidden border border-cyber-green/30 bg-cyber-black/50 flex items-center justify-center group">
-                {/* Placeholder for profile image */}
-                <div className="absolute inset-0 bg-gradient-to-t from-cyber-black to-transparent opacity-60" />
-                <span className="text-cyber-green font-mono text-sm tracking-widest group-hover:scale-110 transition-transform duration-500">
-                  [IMAGE_PLACEHOLDER]
-                </span>
+            <ScrollReveal>
+              <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
+                <GlitchText text="ABOUT ME" />
+              </h2>
+              <div className="grid md:grid-cols-2 gap-8">
+                <GlassCard className="h-full">
+                  <p className="text-lg leading-relaxed mb-4">
+                    I am a Computer Vision Engineer at UCSD, majoring in Math-Computer Science with a minor in Economics.
+                    My passion lies in decoding the visual world through algorithms, bridging the gap between mathematical theory and real-world perception.
+                  </p>
+                  <p className="text-lg leading-relaxed">
+                    I build systems that see, understand, and interact with their environment.
+                  </p>
+                </GlassCard>
+                <div className="relative h-64 md:h-auto rounded-lg overflow-hidden border border-cyber-green/30 bg-cyber-black/50 flex items-center justify-center group">
+                  {/* Placeholder for profile image */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-cyber-black to-transparent opacity-60" />
+                  <span className="text-cyber-green font-mono text-sm tracking-widest group-hover:scale-110 transition-transform duration-500">
+                    [IMAGE_PLACEHOLDER]
+                  </span>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
           </section>
 
           {/* Experience Section */}
           <section id="experience" className="scroll-mt-24">
-            <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
-              EXPERIENCE
-            </h2>
-            <div className="space-y-6">
-              <GlassCard
-                title="Playar Inc. | Computer Vision Intern"
-                showLearnMore
-                onLearnMore={() => setActiveModal("playar")}
-              >
-                <p className="text-sm text-cyber-green/80 font-mono mb-2">San Diego, CA | Jan 2025 - Present</p>
-                <ul className="list-disc list-inside space-y-2 text-gray-300">
-                  <li>Developing cricket ball tracking algorithms for real-time match-play simulators</li>
-                  <li>Built YOLOv11-based real-time cricket ball detection model with MediaPipe</li>
-                  <li>Optimized inference with TensorRT & ONNX for real-time analysis</li>
-                </ul>
-              </GlassCard>
+            <ScrollReveal>
+              <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
+                <GlitchText text="EXPERIENCE" />
+              </h2>
+              <div className="space-y-6">
+                <GlassCard
+                  title="Playar Inc. | Computer Vision Intern"
+                  showLearnMore
+                  onLearnMore={() => setActiveModal("playar")}
+                >
+                  <p className="text-sm text-cyber-green/80 font-mono mb-2">San Diego, CA | Jan 2025 - Present</p>
+                  <ul className="list-disc list-inside space-y-2 text-gray-300">
+                    <li>Developing cricket ball tracking algorithms for real-time match-play simulators</li>
+                    <li>Built YOLOv11-based real-time cricket ball detection model with MediaPipe</li>
+                    <li>Optimized inference with TensorRT & ONNX for real-time analysis</li>
+                  </ul>
+                </GlassCard>
 
-              <GlassCard
-                title="Tech Mahindra | Computer Vision Intern"
-                showLearnMore
-                onLearnMore={() => setActiveModal("techmahindra")}
-              >
-                <p className="text-sm text-cyber-green/80 font-mono mb-2">India | Jul - Sep 2025</p>
-                <ul className="list-disc list-inside space-y-2 text-gray-300">
-                  <li>Built custom farming datasets with semantic segmentation</li>
-                  <li>Generated 100k+ fully labeled synthetic images in Blender</li>
-                </ul>
-              </GlassCard>
+                <GlassCard
+                  title="Tech Mahindra | Computer Vision Intern"
+                  showLearnMore
+                  onLearnMore={() => setActiveModal("techmahindra")}
+                >
+                  <p className="text-sm text-cyber-green/80 font-mono mb-2">India | Jul - Sep 2025</p>
+                  <ul className="list-disc list-inside space-y-2 text-gray-300">
+                    <li>Built custom farming datasets with semantic segmentation</li>
+                    <li>Generated 100k+ fully labeled synthetic images in Blender</li>
+                  </ul>
+                </GlassCard>
 
-              <GlassCard
-                title="VertexPlus Technologies Ltd. | Computer Vision Intern"
-                showLearnMore
-                onLearnMore={() => setActiveModal("vertexplus")}
-              >
-                <p className="text-sm text-cyber-green/80 font-mono mb-2">India | Jun - Aug 2024</p>
-                <ul className="list-disc list-inside space-y-2 text-gray-300">
-                  <li>Developed real-time Object Detection software using YOLOv5</li>
-                  <li>Integrated computer vision architecture into security infrastructure</li>
-                </ul>
-              </GlassCard>
+                <GlassCard
+                  title="VertexPlus Technologies | Computer Vision Intern"
+                  showLearnMore
+                  onLearnMore={() => setActiveModal("vertexplus")}
+                >
+                  <p className="text-sm text-cyber-green/80 font-mono mb-2">India | Jun - Aug 2024</p>
+                  <ul className="list-disc list-inside space-y-2 text-gray-300">
+                    <li>Implemented advanced Convolutional Neural Networks using YOLOv5 architecture</li>
+                    <li>Enabled real-time compliance tracking and notifications for non-compliant behavior</li>
+                  </ul>
+                </GlassCard>
 
-              <GlassCard title="UCSD - Academic Integrity Office | Peer Educator">
-                <p className="text-sm text-cyber-green/80 font-mono mb-2">San Diego, CA | Mar 2025 - Present</p>
-                <ul className="list-disc list-inside space-y-2 text-gray-300">
-                  <li>Facilitated group meetings for academic integrity violations</li>
-                  <li>Strengthened communication and leadership abilities</li>
-                </ul>
-              </GlassCard>
-            </div>
+                <GlassCard title="UCSD - Academic Integrity Office | Peer Educator">
+                  <p className="text-sm text-cyber-green/80 font-mono mb-2">San Diego, CA | Mar 2025 - Present</p>
+                  <ul className="list-disc list-inside space-y-2 text-gray-300">
+                    <li>Facilitated group meetings for academic integrity violations</li>
+                    <li>Strengthened communication and leadership abilities</li>
+                  </ul>
+                </GlassCard>
+              </div>
+            </ScrollReveal>
           </section>
 
           {/* Projects Section */}
           <section id="projects" className="scroll-mt-24">
-            <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
-              PROJECTS
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
-              <GlassCard
-                title="SmartVision | Object Detection Software"
-                className="hover:scale-[1.02]"
-                showLearnMore
-                onLearnMore={() => setActiveModal("smartvision")}
-              >
-                <div className="h-40 bg-cyber-black/50 rounded mb-4 border border-cyber-green/10 flex items-center justify-center">
-                  <span className="text-xs font-mono text-gray-500">PROJECT_PREVIEW</span>
-                </div>
-                <p className="text-sm mb-4">
-                  Real-time object detection software using YOLOv5 for factory safety compliance monitoring.
-                </p>
-                <div className="flex gap-2 flex-wrap">
-                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">PyTorch</span>
-                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">YOLOv5</span>
-                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">TensorFlow</span>
-                </div>
-              </GlassCard>
+            <ScrollReveal>
+              <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
+                <GlitchText text="PROJECTS" />
+              </h2>
+              <div className="grid md:grid-cols-2 gap-6">
+                <GlassCard
+                  title="SmartVision"
+                  showLearnMore
+                  onLearnMore={() => setActiveModal("smartvision")}
+                >
+                  <p className="text-gray-300 mb-4">
+                    Real-time object detection software using advanced Computational Neural Networks and YOLOv5 architectures.
+                  </p>
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    <span className="px-2 py-1 bg-cyber-green/10 rounded text-xs text-cyber-green border border-cyber-green/20">PyTorch</span>
+                    <span className="px-2 py-1 bg-cyber-green/10 rounded text-xs text-cyber-green border border-cyber-green/20">YOLOv5</span>
+                  </div>
+                </GlassCard>
 
-              <GlassCard
-                title="IntelliRest™ | Smart Pillow Project"
-                className="hover:scale-[1.02]"
-                showLearnMore
-                onLearnMore={() => setActiveModal("intellirest")}
-              >
-                <div className="h-40 bg-cyber-black/50 rounded mb-4 border border-cyber-green/10 flex items-center justify-center">
-                  <span className="text-xs font-mono text-gray-500">PROJECT_PREVIEW</span>
-                </div>
-                <p className="text-sm mb-4">
-                  Smart pillow with biometric sleep analysis using heart rate sensors and galvanic skin response monitoring.
-                </p>
-                <div className="flex gap-2 flex-wrap">
-                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">Python</span>
-                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">IoT</span>
-                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">Mobile App</span>
-                </div>
-              </GlassCard>
-            </div>
+                <GlassCard
+                  title="IntelliRest™"
+                  showLearnMore
+                  onLearnMore={() => setActiveModal("intellirest")}
+                >
+                  <p className="text-gray-300 mb-4">
+                    Smart pillow featuring biometric sleep analysis using heart rate sensors and galvanic skin response monitors.
+                  </p>
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    <span className="px-2 py-1 bg-cyber-green/10 rounded text-xs text-cyber-green border border-cyber-green/20">IoT</span>
+                    <span className="px-2 py-1 bg-cyber-green/10 rounded text-xs text-cyber-green border border-cyber-green/20">Python</span>
+                  </div>
+                </GlassCard>
+              </div>
+            </ScrollReveal>
           </section>
 
           {/* Timeline Section */}
-          <Timeline />
+          <section className="scroll-mt-24">
+            <ScrollReveal>
+              <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
+                <GlitchText text="TIMELINE" />
+              </h2>
+              <Timeline />
+            </ScrollReveal>
+          </section>
 
-          {/* Contact Section */}
           <Contact />
         </div>
       </div>
