@@ -128,7 +128,7 @@ export default function Timeline() {
     return (
         <section id="timeline" className="scroll-mt-24 py-20">
             <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-12 tracking-wider text-center">
-                04. JOURNEY
+                JOURNEY
             </h2>
 
             <div className="max-w-4xl mx-auto relative">

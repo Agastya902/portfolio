@@ -146,7 +146,7 @@ export default function Home() {
           {/* About Section */}
           <section id="about" className="scroll-mt-24">
             <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
-              01. ABOUT ME
+              ABOUT ME
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
               <GlassCard className="h-full">
@@ -171,7 +171,7 @@ export default function Home() {
           {/* Experience Section */}
           <section id="experience" className="scroll-mt-24">
             <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
-              02. EXPERIENCE
+              EXPERIENCE
             </h2>
             <div className="space-y-6">
               <GlassCard
@@ -224,7 +224,7 @@ export default function Home() {
           {/* Projects Section */}
           <section id="projects" className="scroll-mt-24">
             <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
-              03. PROJECTS
+              PROJECTS
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
               <GlassCard
