@@ -29,16 +29,22 @@ export default function About() {
                             <div className="absolute inset-0 bg-gradient-to-t from-cyber-black/60 to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-300" />
                         </div>
 
-                        {/* Current Role */}
-                        <div className="p-3 rounded-xl bg-white/5 border border-white/5 hover:border-cyber-green/20 transition-colors">
+                        {/* Current Roles */}
+                        <div className="p-3 rounded-xl bg-white/5 border border-white/5 hover:border-cyber-green/20 transition-colors space-y-2">
                             <div className="flex items-center gap-2 mb-1.5">
                                 <div className="p-1 rounded bg-cyber-green/10 text-cyber-green">
                                     <Briefcase className="w-3 h-3" />
                                 </div>
-                                <span className="text-[10px] text-cyber-green font-mono uppercase tracking-wider">Current Role</span>
+                                <span className="text-[10px] text-cyber-green font-mono uppercase tracking-wider">Current Roles</span>
                             </div>
-                            <div className="font-bold text-white text-sm">Computer Vision Intern</div>
-                            <div className="text-[11px] text-gray-400">Playar Inc.</div>
+                            <div>
+                                <div className="font-bold text-white text-sm">CV Intern</div>
+                                <div className="text-[11px] text-gray-400">Playar Inc.</div>
+                            </div>
+                            <div>
+                                <div className="font-bold text-white text-sm">Peer Mentor</div>
+                                <div className="text-[11px] text-gray-400">UCSD AI Office</div>
+                            </div>
                         </div>
 
                         {/* Education */}
@@ -65,13 +71,10 @@ export default function About() {
                                     I am a Math-Computer Science major with a minor in Economics at <span className="text-white font-medium">UC San Diego</span>.
                                 </p>
                                 <p>
-                                    My interests lie in <span className="text-white font-medium">Computer Vision</span> and <span className="text-white font-medium">Deep Learning</span>, specifically pushing towards real-time inference and 3D reconstruction.
+                                    Currently working on an app at <span className="text-white font-medium">Playar Inc.</span> that performs real-time object detection, trajectory analysis, and ball tracking for sports.
                                 </p>
                                 <p>
-                                    Currently, I am working as a Computer Vision Intern at <span className="text-white font-medium">Playar Inc.</span>, where I build object detection and trajectory analysis software for sports simulators.
-                                </p>
-                                <p>
-                                    I am also developing an app with them that performs real-time trajectory analysis and ball tracking for sports.
+                                    Previously spent a summer at <span className="text-white font-medium">Tech Mahindra</span> developing computer vision systems for an autonomous tomato farming robot, focusing on crop detection and yield optimization.
                                 </p>
                             </div>
                         </div>
