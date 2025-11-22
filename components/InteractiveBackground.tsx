@@ -56,10 +56,10 @@ export default function InteractiveBackground() {
         window.addEventListener("resize", resizeCanvas);
 
         const handleMouseMove = (e: MouseEvent) => {
-            const rect = canvas.getBoundingClientRect();
+            // pageX and pageY are already relative to the full document
             mouseRef.current = {
-                x: e.clientX - rect.left,
-                y: e.clientY - rect.top + window.scrollY
+                x: e.pageX,
+                y: e.pageY
             };
         };
 
