@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
+import About from "@/components/About";
 import InteractiveBackground from "@/components/InteractiveBackground";
 import GlassCard from "@/components/GlassCard";
 import Modal from "@/components/Modal";
@@ -149,31 +150,7 @@ export default function Home() {
 
         <div className="max-w-6xl mx-auto space-y-20 relative z-10">
           {/* About Section */}
-          <section id="about" className="scroll-mt-24">
-            <ScrollReveal>
-              <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
-                ABOUT ME
-              </h2>
-              <div className="grid md:grid-cols-2 gap-8">
-                <GlassCard className="h-full">
-                  <p className="text-lg leading-relaxed mb-4">
-                    I am a Computer Vision Engineer at UCSD, majoring in Math-Computer Science with a minor in Economics.
-                    My passion lies in decoding the visual world through algorithms, bridging the gap between mathematical theory and real-world perception.
-                  </p>
-                  <p className="text-lg leading-relaxed">
-                    I build systems that see, understand, and interact with their environment.
-                  </p>
-                </GlassCard>
-                <div className="relative h-64 md:h-auto rounded-lg overflow-hidden border border-cyber-green/30 bg-cyber-black/50 flex items-center justify-center group">
-                  {/* Placeholder for profile image */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-cyber-black to-transparent opacity-60" />
-                  <span className="text-cyber-green font-mono text-sm tracking-widest group-hover:scale-110 transition-transform duration-500">
-                    [IMAGE_PLACEHOLDER]
-                  </span>
-                </div>
-              </div>
-            </ScrollReveal>
-          </section>
+          <About />
 
           {/* Experience Section */}
           <section id="experience" className="scroll-mt-24">
