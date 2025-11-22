@@ -143,135 +143,100 @@ export default function Home() {
       <div className="relative min-h-screen py-20 px-4 md:px-8 overflow-hidden">
         <InteractiveBackground />
 
-        <div className="max-w-6xl mx-auto space-y-20 relative z-10">
+        <div className="max-w-5xl mx-auto space-y-32 relative z-10">
           {/* About Section */}
-          <section id="about" className="scroll-mt-24">
-            <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
-              ABOUT ME
-            </h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              <GlassCard className="h-full">
-                <p className="text-lg leading-relaxed mb-4">
-                  I am a Computer Vision Engineer at UCSD, majoring in Math-Computer Science with a minor in Economics.
-                  My passion lies in decoding the visual world through algorithms, bridging the gap between mathematical theory and real-world perception.
-                </p>
-                <p className="text-lg leading-relaxed">
-                  I build systems that see, understand, and interact with their environment.
-                </p>
-              </GlassCard>
-              <div className="relative h-64 md:h-auto rounded-lg overflow-hidden border border-cyber-green/30 bg-cyber-black/50 flex items-center justify-center group">
+          <section id="about" className="scroll-mt-32">
+            <div className="grid md:grid-cols-[1.5fr,1fr] gap-12 items-center">
+              <div className="space-y-6">
+                <h2 className="text-4xl md:text-5xl font-bold font-heading text-white mb-8 tracking-tight">
+                  About Me
+                </h2>
+                <div className="space-y-6 text-lg text-gray-300 font-light leading-relaxed">
+                  <p>
+                    I am a Computer Vision Engineer at UCSD, majoring in Math-Computer Science with a minor in Economics.
+                    My passion lies in decoding the visual world through algorithms, bridging the gap between mathematical theory and real-world perception.
+                  </p>
+                  <p>
+                    I build systems that see, understand, and interact with their environment.
+                  </p>
+                </div>
+              </div>
+              <div className="relative aspect-[4/5] rounded-sm overflow-hidden bg-cyber-black/50 border border-white/10 group">
                 {/* Placeholder for profile image */}
-                <div className="absolute inset-0 bg-gradient-to-t from-cyber-black to-transparent opacity-60" />
-                <span className="text-cyber-green font-mono text-sm tracking-widest group-hover:scale-110 transition-transform duration-500">
-                  [IMAGE_PLACEHOLDER]
-                </span>
+                <div className="absolute inset-0 bg-gradient-to-t from-cyber-black/80 to-transparent" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-white/20 font-mono text-sm tracking-widest group-hover:text-cyber-green/50 transition-colors duration-500">
+                    [IMAGE_PLACEHOLDER]
+                  </span>
+                </div>
               </div>
             </div>
           </section>
 
           {/* Experience Section */}
-          <section id="experience" className="scroll-mt-24">
-            <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
-              EXPERIENCE
+          <section id="experience" className="scroll-mt-32">
+            <h2 className="text-4xl md:text-5xl font-bold font-heading text-white mb-12 tracking-tight">
+              Experience
             </h2>
-            <div className="space-y-6">
-              <GlassCard
-                title="Playar Inc. | Computer Vision Intern"
-                showLearnMore
-                onLearnMore={() => setActiveModal("playar")}
-              >
-                <p className="text-sm text-cyber-green/80 font-mono mb-2">San Diego, CA | Jan 2025 - Present</p>
-                <ul className="list-disc list-inside space-y-2 text-gray-300">
+            <div className="space-y-12">
+              <div className="group">
+                <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-2">
+                  <h3 className="text-2xl font-bold text-white group-hover:text-cyber-green transition-colors">Playar Inc.</h3>
+                  <span className="text-gray-400 font-mono text-sm">Jan 2025 - Present</span>
+                </div>
+                <p className="text-lg text-gray-300 mb-4">Computer Vision Intern</p>
+                <ul className="space-y-2 text-gray-400 font-light leading-relaxed max-w-3xl">
                   <li>Developing cricket ball tracking algorithms for real-time match-play simulators</li>
                   <li>Built YOLOv11-based real-time cricket ball detection model with MediaPipe</li>
                   <li>Optimized inference with TensorRT & ONNX for real-time analysis</li>
                 </ul>
-              </GlassCard>
+                <button
+                  onClick={() => setActiveModal("playar")}
+                  className="mt-4 text-sm text-cyber-green hover:text-white transition-colors uppercase tracking-wider font-medium"
+                >
+                  Read More →
+                </button>
+              </div>
 
-              <GlassCard
-                title="Tech Mahindra | Computer Vision Intern"
-                showLearnMore
-                onLearnMore={() => setActiveModal("techmahindra")}
-              >
-                <p className="text-sm text-cyber-green/80 font-mono mb-2">India | Jul - Sep 2025</p>
-                <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <div className="group">
+                <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-2">
+                  <h3 className="text-2xl font-bold text-white group-hover:text-cyber-green transition-colors">Tech Mahindra</h3>
+                  <span className="text-gray-400 font-mono text-sm">Jul - Sep 2025</span>
+                </div>
+                <p className="text-lg text-gray-300 mb-4">Computer Vision Intern</p>
+                <ul className="space-y-2 text-gray-400 font-light leading-relaxed max-w-3xl">
                   <li>Built custom farming datasets with semantic segmentation</li>
                   <li>Generated 100k+ fully labeled synthetic images in Blender</li>
                 </ul>
-              </GlassCard>
+                <button
+                  onClick={() => setActiveModal("techmahindra")}
+                  className="mt-4 text-sm text-cyber-green hover:text-white transition-colors uppercase tracking-wider font-medium"
+                >
+                  Read More →
+                </button>
+              </div>
 
-              <GlassCard
-                title="VertexPlus Technologies Ltd. | Computer Vision Intern"
-                showLearnMore
-                onLearnMore={() => setActiveModal("vertexplus")}
-              >
-                <p className="text-sm text-cyber-green/80 font-mono mb-2">India | Jun - Aug 2024</p>
-                <ul className="list-disc list-inside space-y-2 text-gray-300">
-                  <li>Developed real-time Object Detection software using YOLOv5</li>
-                  <li>Integrated computer vision architecture into security infrastructure</li>
+              <div className="group">
+                <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-2">
+                  <h3 className="text-2xl font-bold text-white group-hover:text-cyber-green transition-colors">VertexPlus Technologies</h3>
+                  <span className="text-gray-400 font-mono text-sm">Jun - Aug 2024</span>
+                </div>
+                <p className="text-lg text-gray-300 mb-4">Computer Vision Intern</p>
+                <ul className="space-y-2 text-gray-400 font-light leading-relaxed max-w-3xl">
+                  <li>Implemented advanced Convolutional Neural Networks using YOLOv5</li>
+                  <li>Enabled real-time compliance tracking and notifications</li>
                 </ul>
-              </GlassCard>
-
-              <GlassCard title="UCSD - Academic Integrity Office | Peer Educator">
-                <p className="text-sm text-cyber-green/80 font-mono mb-2">San Diego, CA | Mar 2025 - Present</p>
-                <ul className="list-disc list-inside space-y-2 text-gray-300">
-                  <li>Facilitated group meetings for academic integrity violations</li>
-                  <li>Strengthened communication and leadership abilities</li>
-                </ul>
-              </GlassCard>
+                <button
+                  onClick={() => setActiveModal("vertexplus")}
+                  className="mt-4 text-sm text-cyber-green hover:text-white transition-colors uppercase tracking-wider font-medium"
+                >
+                  Read More →
+                </button>
+              </div>
             </div>
           </section>
 
           {/* Projects Section */}
-          <section id="projects" className="scroll-mt-24">
-            <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
-              PROJECTS
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
-              <GlassCard
-                title="SmartVision | Object Detection Software"
-                className="hover:scale-[1.02]"
-                showLearnMore
-                onLearnMore={() => setActiveModal("smartvision")}
-              >
-                <div className="h-40 bg-cyber-black/50 rounded mb-4 border border-cyber-green/10 flex items-center justify-center">
-                  <span className="text-xs font-mono text-gray-500">PROJECT_PREVIEW</span>
-                </div>
-                <p className="text-sm mb-4">
-                  Real-time object detection software using YOLOv5 for factory safety compliance monitoring.
-                </p>
-                <div className="flex gap-2 flex-wrap">
-                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">PyTorch</span>
-                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">YOLOv5</span>
-                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">TensorFlow</span>
-                </div>
-              </GlassCard>
-
-              <GlassCard
-                title="IntelliRest™ | Smart Pillow Project"
-                className="hover:scale-[1.02]"
-                showLearnMore
-                onLearnMore={() => setActiveModal("intellirest")}
-              >
-                <div className="h-40 bg-cyber-black/50 rounded mb-4 border border-cyber-green/10 flex items-center justify-center">
-                  <span className="text-xs font-mono text-gray-500">PROJECT_PREVIEW</span>
-                </div>
-                <p className="text-sm mb-4">
-                  Smart pillow with biometric sleep analysis using heart rate sensors and galvanic skin response monitoring.
-                </p>
-                <div className="flex gap-2 flex-wrap">
-                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">Python</span>
-                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">IoT</span>
-                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">Mobile App</span>
-                </div>
-              </GlassCard>
-            </div>
-          </section>
-
-          {/* Timeline Section */}
-          <Timeline />
-
-          {/* Contact Section */}
           <Contact />
         </div>
       </div>
