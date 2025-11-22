@@ -1,65 +1,117 @@
-import Image from "next/image";
+import Hero from "@/components/Hero";
+import Navbar from "@/components/Navbar";
+import InteractiveBackground from "@/components/InteractiveBackground";
+import GlassCard from "@/components/GlassCard";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen bg-cyber-black text-white selection:bg-cyber-green selection:text-cyber-black">
+      <Navbar />
+      <Hero />
+
+      <div className="relative min-h-screen py-20 px-4 md:px-8 overflow-hidden">
+        <InteractiveBackground />
+
+        <div className="max-w-6xl mx-auto space-y-20 relative z-10">
+          {/* About Section */}
+          <section id="about" className="scroll-mt-24">
+            <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
+              01. ABOUT ME
+            </h2>
+            <div className="grid md:grid-cols-2 gap-8">
+              <GlassCard className="h-full">
+                <p className="text-lg leading-relaxed mb-4">
+                  I am a Computer Vision Engineer at UCSD, majoring in Math-Computer Science with a minor in Economics.
+                  My passion lies in decoding the visual world through algorithms, bridging the gap between mathematical theory and real-world perception.
+                </p>
+                <p className="text-lg leading-relaxed">
+                  I build systems that see, understand, and interact with their environment.
+                </p>
+              </GlassCard>
+              <div className="relative h-64 md:h-auto rounded-lg overflow-hidden border border-cyber-green/30 bg-cyber-black/50 flex items-center justify-center group">
+                {/* Placeholder for profile image */}
+                <div className="absolute inset-0 bg-gradient-to-t from-cyber-black to-transparent opacity-60" />
+                <span className="text-cyber-green font-mono text-sm tracking-widest group-hover:scale-110 transition-transform duration-500">
+                  [IMAGE_PLACEHOLDER]
+                </span>
+              </div>
+            </div>
+          </section>
+
+          {/* Experience Section */}
+          <section id="experience" className="scroll-mt-24">
+            <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
+              02. EXPERIENCE
+            </h2>
+            <div className="space-y-6">
+              <GlassCard title="Computer Vision Engineer @ UCSD">
+                <p className="text-sm text-cyber-green/80 font-mono mb-2">2023 - PRESENT</p>
+                <ul className="list-disc list-inside space-y-2 text-gray-300">
+                  <li>Developing advanced perception algorithms for autonomous systems.</li>
+                  <li>Researching 3D reconstruction and semantic segmentation techniques.</li>
+                  <li>Collaborating with cross-functional teams to deploy ML models to edge devices.</li>
+                </ul>
+              </GlassCard>
+
+              <GlassCard title="Research Intern @ Tech Institute">
+                <p className="text-sm text-cyber-green/80 font-mono mb-2">SUMMER 2023</p>
+                <ul className="list-disc list-inside space-y-2 text-gray-300">
+                  <li>Implemented state-of-the-art object detection models (YOLOv8).</li>
+                  <li>Optimized inference pipelines for real-time performance.</li>
+                </ul>
+              </GlassCard>
+            </div>
+          </section>
+
+          {/* Projects Section */}
+          <section id="projects" className="scroll-mt-24">
+            <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
+              03. PROJECTS
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <GlassCard title="Autonomous Drone Navigation" className="hover:scale-[1.02]">
+                <div className="h-40 bg-cyber-black/50 rounded mb-4 border border-cyber-green/10 flex items-center justify-center">
+                  <span className="text-xs font-mono text-gray-500">VIDEO_PREVIEW</span>
+                </div>
+                <p className="text-sm mb-4">
+                  Real-time obstacle avoidance and path planning using monocular SLAM.
+                </p>
+                <div className="flex gap-2 flex-wrap">
+                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">Python</span>
+                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">ROS2</span>
+                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">OpenCV</span>
+                </div>
+              </GlassCard>
+
+              <GlassCard title="3D Scene Reconstruction" className="hover:scale-[1.02]">
+                <div className="h-40 bg-cyber-black/50 rounded mb-4 border border-cyber-green/10 flex items-center justify-center">
+                  <span className="text-xs font-mono text-gray-500">VIDEO_PREVIEW</span>
+                </div>
+                <p className="text-sm mb-4">
+                  Reconstructing detailed 3D models from 2D image collections using NeRFs.
+                </p>
+                <div className="flex gap-2 flex-wrap">
+                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">PyTorch</span>
+                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">NeRF</span>
+                </div>
+              </GlassCard>
+
+              <GlassCard title="Gesture Control Interface" className="hover:scale-[1.02]">
+                <div className="h-40 bg-cyber-black/50 rounded mb-4 border border-cyber-green/10 flex items-center justify-center">
+                  <span className="text-xs font-mono text-gray-500">VIDEO_PREVIEW</span>
+                </div>
+                <p className="text-sm mb-4">
+                  Controlling UI elements using hand gestures captured via webcam.
+                </p>
+                <div className="flex gap-2 flex-wrap">
+                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">MediaPipe</span>
+                  <span className="text-xs px-2 py-1 rounded bg-cyber-green/10 text-cyber-green border border-cyber-green/20">React</span>
+                </div>
+              </GlassCard>
+            </div>
+          </section>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }
