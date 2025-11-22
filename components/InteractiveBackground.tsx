@@ -2,17 +2,17 @@
 
 import { useEffect, useRef } from "react";
 
-interface Node {
+interface Particle {
     x: number;
     y: number;
     vx: number;
     vy: number;
-    connections: number[];
+    radius: number;
 }
 
 export default function InteractiveBackground() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const nodesRef = useRef<Node[]>([]);
+    const particlesRef = useRef<Particle[]>([]);
     const mouseRef = useRef({ x: 0, y: 0 });
     const animationRef = useRef<number | undefined>(undefined);
 
@@ -26,51 +26,28 @@ export default function InteractiveBackground() {
         const resizeCanvas = () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            initParticles();
+        };
+
+        const initParticles = () => {
+            const particles: Particle[] = [];
+            const particleCount = Math.floor((canvas.width * canvas.height) / 15000); // Density-based count
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.3, // Slow movement
+                    vy: (Math.random() - 0.5) * 0.3,
+                    radius: Math.random() * 1.5 + 0.5, // Small particles
+                });
+            }
+
+            particlesRef.current = particles;
         };
 
         resizeCanvas();
         window.addEventListener("resize", resizeCanvas);
-
-        // Initialize nodes with even distribution
-        const cols = 12;
-        const rows = 8;
-        const nodeCount = cols * rows;
-        const nodes: Node[] = [];
-
-        const spacingX = canvas.width / (cols + 1);
-        const spacingY = canvas.height / (rows + 1);
-
-        for (let row = 0; row < rows; row++) {
-            for (let col = 0; col < cols; col++) {
-                // Add some random offset for natural look
-                const offsetX = (Math.random() - 0.5) * spacingX * 0.3;
-                const offsetY = (Math.random() - 0.5) * spacingY * 0.3;
-
-                nodes.push({
-                    x: (col + 1) * spacingX + offsetX,
-                    y: (row + 1) * spacingY + offsetY,
-                    vx: (Math.random() - 0.5) * 0.2, // Very subtle velocity
-                    vy: (Math.random() - 0.5) * 0.2,
-                    connections: [],
-                });
-            }
-        }
-
-        // Create connections
-        nodes.forEach((node, i) => {
-            nodes.forEach((other, j) => {
-                if (i !== j) {
-                    const dx = node.x - other.x;
-                    const dy = node.y - other.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    if (distance < 180 && node.connections.length < 3) {
-                        node.connections.push(j);
-                    }
-                }
-            });
-        });
-
-        nodesRef.current = nodes;
 
         const handleMouseMove = (e: MouseEvent) => {
             mouseRef.current = { x: e.clientX, y: e.clientY };
@@ -79,97 +56,88 @@ export default function InteractiveBackground() {
         window.addEventListener("mousemove", handleMouseMove);
 
         // Animation loop
-        let pulseTime = 0;
         const animate = () => {
-            pulseTime += 0.015;
-            ctx.fillStyle = "rgba(2, 6, 23, 0.08)";
+            ctx.fillStyle = "rgba(2, 6, 23, 0.05)"; // Very subtle fade
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             const mouse = mouseRef.current;
-            const pulse = Math.sin(pulseTime) * 0.5 + 0.5;
+            const particles = particlesRef.current;
 
-            nodesRef.current.forEach((node, i) => {
-                // Very subtle mouse interaction
-                const dx = mouse.x - node.x;
-                const dy = mouse.y - node.y;
+            particles.forEach((particle, i) => {
+                // Mouse interaction - gentle repulsion
+                const dx = mouse.x - particle.x;
+                const dy = mouse.y - particle.y;
                 const distToMouse = Math.sqrt(dx * dx + dy * dy);
 
-                if (distToMouse < 250) {
-                    const force = (250 - distToMouse) / 250;
-                    node.vx -= (dx / distToMouse) * force * 0.2; // Subtle repulsion
-                    node.vy -= (dy / distToMouse) * force * 0.2;
+                if (distToMouse < 150) {
+                    const force = (150 - distToMouse) / 150;
+                    particle.vx -= (dx / distToMouse) * force * 0.1;
+                    particle.vy -= (dy / distToMouse) * force * 0.1;
                 }
 
                 // Update position
-                node.x += node.vx;
-                node.y += node.vy;
+                particle.x += particle.vx;
+                particle.y += particle.vy;
 
-                // Strong damping for minimal movement
-                node.vx *= 0.97;
-                node.vy *= 0.97;
+                // Damping
+                particle.vx *= 0.98;
+                particle.vy *= 0.98;
 
-                // Soft boundaries
-                if (node.x < 0 || node.x > canvas.width) {
-                    node.vx *= -1;
-                    node.x = Math.max(0, Math.min(canvas.width, node.x));
-                }
-                if (node.y < 0 || node.y > canvas.height) {
-                    node.vy *= -1;
-                    node.y = Math.max(0, Math.min(canvas.height, node.y));
-                }
+                // Wrap around edges
+                if (particle.x < 0) particle.x = canvas.width;
+                if (particle.x > canvas.width) particle.x = 0;
+                if (particle.y < 0) particle.y = canvas.height;
+                if (particle.y > canvas.height) particle.y = 0;
 
-                // Draw connections
-                node.connections.forEach((connectedIndex) => {
-                    const other = nodesRef.current[connectedIndex];
-                    const dx = other.x - node.x;
-                    const dy = other.y - node.y;
+                // Draw connections to nearby particles
+                particles.slice(i + 1).forEach((otherParticle) => {
+                    const dx = otherParticle.x - particle.x;
+                    const dy = otherParticle.y - particle.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
+                    const maxDistance = 120;
 
-                    if (distance < 220) {
-                        const opacity = 1 - distance / 220;
-                        const isNearMouse = distToMouse < 200;
+                    if (distance < maxDistance) {
+                        const opacity = (1 - distance / maxDistance) * 0.15; // Very subtle lines
 
-                        // Base connection
-                        ctx.strokeStyle = `rgba(0, 255, 159, ${opacity * 0.2})`;
-                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = `rgba(0, 255, 159, ${opacity})`;
+                        ctx.lineWidth = 0.5;
                         ctx.beginPath();
-                        ctx.moveTo(node.x, node.y);
-                        ctx.lineTo(other.x, other.y);
+                        ctx.moveTo(particle.x, particle.y);
+                        ctx.lineTo(otherParticle.x, otherParticle.y);
                         ctx.stroke();
 
-                        // Subtle glow on hover
-                        if (isNearMouse) {
-                            const glowIntensity = (200 - distToMouse) / 200;
-                            ctx.strokeStyle = `rgba(0, 255, 159, ${opacity * glowIntensity * 0.5})`;
-                            ctx.lineWidth = 1.5;
-                            ctx.shadowBlur = 12;
-                            ctx.shadowColor = `rgba(0, 255, 159, ${glowIntensity * 0.6})`;
+                        // Extra glow near mouse
+                        if (distToMouse < 100) {
+                            const glowOpacity = opacity * ((100 - distToMouse) / 100) * 0.3;
+                            ctx.strokeStyle = `rgba(0, 255, 159, ${glowOpacity})`;
+                            ctx.lineWidth = 1;
+                            ctx.shadowBlur = 5;
+                            ctx.shadowColor = "rgba(0, 255, 159, 0.3)";
                             ctx.beginPath();
-                            ctx.moveTo(node.x, node.y);
-                            ctx.lineTo(other.x, other.y);
+                            ctx.moveTo(particle.x, particle.y);
+                            ctx.lineTo(otherParticle.x, otherParticle.y);
                             ctx.stroke();
                             ctx.shadowBlur = 0;
                         }
                     }
                 });
 
-                // Draw nodes
-                const isNearMouse = distToMouse < 200;
-                const nodeSize = isNearMouse ? 4 + pulse * 0.5 : 2.5 + pulse * 0.3;
-                const nodeOpacity = isNearMouse ? 0.85 : 0.5;
+                // Draw particle
+                const isNearMouse = distToMouse < 100;
+                const particleOpacity = isNearMouse ? 0.6 : 0.3;
 
-                ctx.fillStyle = `rgba(0, 255, 159, ${nodeOpacity})`;
+                ctx.fillStyle = `rgba(0, 255, 159, ${particleOpacity})`;
                 ctx.beginPath();
-                ctx.arc(node.x, node.y, nodeSize, 0, Math.PI * 2);
+                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Subtle glow for nodes near mouse
+                // Subtle glow on nearby particles
                 if (isNearMouse) {
-                    const glowIntensity = (200 - distToMouse) / 200;
-                    ctx.shadowBlur = 15 * glowIntensity;
-                    ctx.shadowColor = `rgba(0, 255, 159, ${glowIntensity * 0.7})`;
+                    const glowIntensity = (100 - distToMouse) / 100;
+                    ctx.shadowBlur = 8 * glowIntensity;
+                    ctx.shadowColor = `rgba(0, 255, 159, ${glowIntensity * 0.5})`;
                     ctx.beginPath();
-                    ctx.arc(node.x, node.y, nodeSize, 0, Math.PI * 2);
+                    ctx.arc(particle.x, particle.y, particle.radius + 1, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.shadowBlur = 0;
                 }
