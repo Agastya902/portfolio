@@ -1,21 +1,15 @@
 import type { Metadata } from "next";
-import { Inter, Outfit, Orbitron } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
-  variable: "--font-inter",
   subsets: ["latin"],
+  variable: '--font-inter',
 });
 
 const outfit = Outfit({
-  variable: "--font-outfit",
   subsets: ["latin"],
-});
-
-const orbitron = Orbitron({
-  subsets: ["latin"],
-  variable: '--font-orbitron',
-  weight: ['400', '500', '700', '900'],
+  variable: '--font-outfit',
 });
 
 export const metadata: Metadata = {
@@ -31,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${outfit.variable} ${orbitron.variable} antialiased`}
+        className={`${inter.variable} ${outfit.variable} antialiased`}
       >
         {children}
       </body>

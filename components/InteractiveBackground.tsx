@@ -2,8 +2,19 @@
 
 import { useEffect, useRef } from "react";
 
+interface Node {
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    connections: number[];
+}
+
 export default function InteractiveBackground() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const nodesRef = useRef<Node[]>([]);
+    const mouseRef = useRef({ x: 0, y: 0 });
+    const animationRef = useRef<number | undefined>(undefined);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -12,126 +23,153 @@ export default function InteractiveBackground() {
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
-        let particles: Particle[] = [];
-        let animationFrameId: number;
-        let mouseX = 0;
-        let mouseY = 0;
-
         const resizeCanvas = () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            initParticles();
         };
-
-        class Particle {
-            x: number;
-            y: number;
-            size: number;
-            speedX: number;
-            speedY: number;
-
-            constructor() {
-                this.x = Math.random() * canvas!.width;
-                this.y = Math.random() * canvas!.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = Math.random() * 1 - 0.5;
-                this.speedY = Math.random() * 1 - 0.5;
-            }
-
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                if (this.x > canvas!.width) this.x = 0;
-                if (this.x < 0) this.x = canvas!.width;
-                if (this.y > canvas!.height) this.y = 0;
-                if (this.y < 0) this.y = canvas!.height;
-
-                // Mouse interaction
-                const dx = mouseX - this.x;
-                const dy = mouseY - this.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < 100) {
-                    const forceDirectionX = dx / distance;
-                    const forceDirectionY = dy / distance;
-                    const force = (100 - distance) / 100;
-                    const directionX = forceDirectionX * force * 2;
-                    const directionY = forceDirectionY * force * 2;
-                    this.x -= directionX;
-                    this.y -= directionY;
-                }
-            }
-
-            draw() {
-                if (!ctx) return;
-                ctx.fillStyle = "rgba(16, 185, 129, 0.5)"; // Cyber green
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        const initParticles = () => {
-            particles = [];
-            const numberOfParticles = (canvas.width * canvas.height) / 15000;
-            for (let i = 0; i < numberOfParticles; i++) {
-                particles.push(new Particle());
-            }
-        };
-
-        const animate = () => {
-            if (!ctx) return;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Draw connections
-            for (let a = 0; a < particles.length; a++) {
-                for (let b = a; b < particles.length; b++) {
-                    const dx = particles[a].x - particles[b].x;
-                    const dy = particles[a].y - particles[b].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < 100) {
-                        ctx.strokeStyle = `rgba(16, 185, 129, ${1 - distance / 100})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[a].x, particles[a].y);
-                        ctx.lineTo(particles[b].x, particles[b].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-
-            particles.forEach((particle) => {
-                particle.update();
-                particle.draw();
-            });
-
-            animationFrameId = requestAnimationFrame(animate);
-        };
-
-        const handleMouseMove = (e: MouseEvent) => {
-            const rect = canvas.getBoundingClientRect();
-            mouseX = e.clientX - rect.left;
-            mouseY = e.clientY - rect.top;
-        };
-
-        window.addEventListener("resize", resizeCanvas);
-        window.addEventListener("mousemove", handleMouseMove);
 
         resizeCanvas();
+        window.addEventListener("resize", resizeCanvas);
+
+        // Initialize neural network nodes
+        const nodeCount = 50;
+        const nodes: Node[] = [];
+
+        for (let i = 0; i < nodeCount; i++) {
+            nodes.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                connections: [],
+            });
+        }
+
+        // Create connections between nearby nodes
+        nodes.forEach((node, i) => {
+            nodes.forEach((other, j) => {
+                if (i !== j) {
+                    const dx = node.x - other.x;
+                    const dy = node.y - other.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 150 && node.connections.length < 3) {
+                        node.connections.push(j);
+                    }
+                }
+            });
+        });
+
+        nodesRef.current = nodes;
+
+        // Mouse move handler
+        const handleMouseMove = (e: MouseEvent) => {
+            mouseRef.current = { x: e.clientX, y: e.clientY };
+        };
+
+        window.addEventListener("mousemove", handleMouseMove);
+
+        // Animation loop
+        const animate = () => {
+            ctx.fillStyle = "rgba(2, 6, 23, 0.1)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const mouse = mouseRef.current;
+
+            nodesRef.current.forEach((node, i) => {
+                // Mouse repulsion
+                const dx = mouse.x - node.x;
+                const dy = mouse.y - node.y;
+                const distToMouse = Math.sqrt(dx * dx + dy * dy);
+
+                if (distToMouse < 200) {
+                    const force = (200 - distToMouse) / 200;
+                    node.vx -= (dx / distToMouse) * force * 0.5;
+                    node.vy -= (dy / distToMouse) * force * 0.5;
+                }
+
+                // Update position
+                node.x += node.vx;
+                node.y += node.vy;
+
+                // Damping
+                node.vx *= 0.95;
+                node.vy *= 0.95;
+
+                // Boundaries with bounce
+                if (node.x < 0 || node.x > canvas.width) {
+                    node.vx *= -1;
+                    node.x = Math.max(0, Math.min(canvas.width, node.x));
+                }
+                if (node.y < 0 || node.y > canvas.height) {
+                    node.vy *= -1;
+                    node.y = Math.max(0, Math.min(canvas.height, node.y));
+                }
+
+                // Draw connections
+                node.connections.forEach((connectedIndex) => {
+                    const other = nodesRef.current[connectedIndex];
+                    const dx = other.x - node.x;
+                    const dy = other.y - node.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 200) {
+                        const opacity = 1 - distance / 200;
+                        ctx.strokeStyle = `rgba(0, 255, 159, ${opacity * 0.3})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(node.x, node.y);
+                        ctx.lineTo(other.x, other.y);
+                        ctx.stroke();
+
+                        // Glow effect on active connections near mouse
+                        if (distToMouse < 150) {
+                            ctx.strokeStyle = `rgba(0, 255, 159, ${opacity * 0.6})`;
+                            ctx.lineWidth = 2;
+                            ctx.shadowBlur = 10;
+                            ctx.shadowColor = "rgba(0, 255, 159, 0.8)";
+                            ctx.beginPath();
+                            ctx.moveTo(node.x, node.y);
+                            ctx.lineTo(other.x, other.y);
+                            ctx.stroke();
+                            ctx.shadowBlur = 0;
+                        }
+                    }
+                });
+
+                // Draw node
+                const nodeSize = distToMouse < 150 ? 4 : 2;
+                ctx.fillStyle = distToMouse < 150 ? "#00ff9f" : "rgba(0, 255, 159, 0.6)";
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, nodeSize, 0, Math.PI * 2);
+                ctx.fill();
+
+                if (distToMouse < 150) {
+                    ctx.shadowBlur = 15;
+                    ctx.shadowColor = "#00ff9f";
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            });
+
+            animationRef.current = requestAnimationFrame(animate);
+        };
+
         animate();
 
         return () => {
             window.removeEventListener("resize", resizeCanvas);
             window.removeEventListener("mousemove", handleMouseMove);
-            cancelAnimationFrame(animationFrameId);
+            if (animationRef.current) {
+                cancelAnimationFrame(animationRef.current);
+            }
         };
     }, []);
 
     return (
         <canvas
             ref={canvasRef}
-            className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"
+            className="fixed inset-0 pointer-events-none z-0"
+            style={{ background: "transparent" }}
         />
     );
 }
