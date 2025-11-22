@@ -11,7 +11,6 @@ import Contact from "@/components/Contact";
 import ScrollProgress from "@/components/ScrollProgress";
 import ScrollReveal from "@/components/ScrollReveal";
 import GlitchText from "@/components/GlitchText";
-import CustomCursor from "@/components/CustomCursor";
 
 type ModalContent = "playar" | "techmahindra" | "vertexplus" | "smartvision" | "intellirest" | null;
 
@@ -142,7 +141,6 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-cyber-black text-white selection:bg-cyber-green selection:text-cyber-black">
       <ScrollProgress />
-      <CustomCursor />
       <Navbar />
       <Hero />
 
