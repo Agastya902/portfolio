@@ -56,7 +56,10 @@ export default function InteractiveBackground() {
         window.addEventListener("resize", resizeCanvas);
 
         const handleMouseMove = (e: MouseEvent) => {
-            mouseRef.current = { x: e.clientX, y: e.clientY };
+            mouseRef.current = {
+                x: e.clientX,
+                y: e.clientY + window.scrollY // Account for scroll position
+            };
         };
 
         window.addEventListener("mousemove", handleMouseMove);
