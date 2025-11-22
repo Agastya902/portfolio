@@ -71,17 +71,17 @@ export default function Contact() {
 
                             <div className="space-y-4">
                                 <a
-                                    href="mailto:agastya@example.com"
+                                    href="mailto:agastyarajsingh2004@gmail.com"
                                     className="flex items-center gap-3 text-gray-300 hover:text-cyber-green transition-colors group"
                                 >
                                     <div className="w-10 h-10 rounded-full bg-cyber-green/10 flex items-center justify-center group-hover:bg-cyber-green/20 transition-colors">
                                         <Mail size={20} className="text-cyber-green" />
                                     </div>
-                                    <span>agastya@example.com</span>
+                                    <span>agastyarajsingh2004@gmail.com</span>
                                 </a>
 
                                 <a
-                                    href="https://linkedin.com/in/agastya"
+                                    href="https://www.linkedin.com/in/agastya-raj-singh-8548101b2/"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center gap-3 text-gray-300 hover:text-cyber-green transition-colors group"
