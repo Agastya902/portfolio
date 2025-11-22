@@ -32,15 +32,15 @@ export default function InteractiveBackground() {
         window.addEventListener("resize", resizeCanvas);
 
         // Initialize neural network nodes
-        const nodeCount = 40; // Reduced for less clutter
+        const nodeCount = 45;
         const nodes: Node[] = [];
 
         for (let i = 0; i < nodeCount; i++) {
             nodes.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.2, // Reduced velocity for stability
-                vy: (Math.random() - 0.5) * 0.2,
+                vx: (Math.random() - 0.5) * 0.4, // Moderate velocity
+                vy: (Math.random() - 0.5) * 0.4,
                 connections: [],
             });
         }
@@ -52,7 +52,7 @@ export default function InteractiveBackground() {
                     const dx = node.x - other.x;
                     const dy = node.y - other.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    if (distance < 200 && node.connections.length < 4) { // Increased connection distance
+                    if (distance < 180 && node.connections.length < 4) {
                         node.connections.push(j);
                     }
                 }
@@ -69,31 +69,35 @@ export default function InteractiveBackground() {
         window.addEventListener("mousemove", handleMouseMove);
 
         // Animation loop
+        let pulseTime = 0;
         const animate = () => {
-            ctx.fillStyle = "rgba(2, 6, 23, 0.05)"; // Lighter fade for trails
+            pulseTime += 0.02;
+            ctx.fillStyle = "rgba(2, 6, 23, 0.08)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             const mouse = mouseRef.current;
+            const pulse = Math.sin(pulseTime) * 0.5 + 0.5; // 0 to 1 pulsing
 
             nodesRef.current.forEach((node, i) => {
-                // Mouse repulsion - reduced force
+                // Mouse interaction - attraction and repulsion
                 const dx = mouse.x - node.x;
                 const dy = mouse.y - node.y;
                 const distToMouse = Math.sqrt(dx * dx + dy * dy);
 
-                if (distToMouse < 250) {
-                    const force = (250 - distToMouse) / 250;
-                    node.vx -= (dx / distToMouse) * force * 0.15; // Reduced repulsion
-                    node.vy -= (dy / distToMouse) * force * 0.15;
+                if (distToMouse < 300) {
+                    const force = (300 - distToMouse) / 300;
+                    // Repel from mouse
+                    node.vx -= (dx / distToMouse) * force * 0.3;
+                    node.vy -= (dy / distToMouse) * force * 0.3;
                 }
 
                 // Update position
                 node.x += node.vx;
                 node.y += node.vy;
 
-                // Damping - increased for more stability
-                node.vx *= 0.98;
-                node.vy *= 0.98;
+                // Moderate damping
+                node.vx *= 0.96;
+                node.vy *= 0.96;
 
                 // Boundaries with bounce
                 if (node.x < 0 || node.x > canvas.width) {
@@ -105,28 +109,32 @@ export default function InteractiveBackground() {
                     node.y = Math.max(0, Math.min(canvas.height, node.y));
                 }
 
-                // Draw connections - lighter
+                // Draw connections with cyberpunk glow
                 node.connections.forEach((connectedIndex) => {
                     const other = nodesRef.current[connectedIndex];
                     const dx = other.x - node.x;
                     const dy = other.y - node.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
 
-                    if (distance < 250) {
-                        const opacity = 1 - distance / 250;
-                        ctx.strokeStyle = `rgba(0, 255, 159, ${opacity * 0.15})`; // Much lighter
+                    if (distance < 220) {
+                        const opacity = 1 - distance / 220;
+                        const isNearMouse = distToMouse < 250;
+
+                        // Base connection
+                        ctx.strokeStyle = `rgba(0, 255, 159, ${opacity * 0.2})`;
                         ctx.lineWidth = 1;
                         ctx.beginPath();
                         ctx.moveTo(node.x, node.y);
                         ctx.lineTo(other.x, other.y);
                         ctx.stroke();
 
-                        // Glow effect on active connections near mouse - lighter
-                        if (distToMouse < 200) {
-                            ctx.strokeStyle = `rgba(0, 255, 159, ${opacity * 0.25})`; // Reduced glow
-                            ctx.lineWidth = 1.5;
-                            ctx.shadowBlur = 8;
-                            ctx.shadowColor = "rgba(0, 255, 159, 0.3)";
+                        // Cyberpunk glow effect near mouse
+                        if (isNearMouse) {
+                            const glowIntensity = (250 - distToMouse) / 250;
+                            ctx.strokeStyle = `rgba(0, 255, 159, ${opacity * glowIntensity * 0.6})`;
+                            ctx.lineWidth = 2;
+                            ctx.shadowBlur = 15;
+                            ctx.shadowColor = `rgba(0, 255, 159, ${glowIntensity * 0.8})`;
                             ctx.beginPath();
                             ctx.moveTo(node.x, node.y);
                             ctx.lineTo(other.x, other.y);
@@ -136,16 +144,23 @@ export default function InteractiveBackground() {
                     }
                 });
 
-                // Draw node - bigger
-                const nodeSize = distToMouse < 200 ? 5 : 3; // Bigger nodes
-                ctx.fillStyle = distToMouse < 200 ? "rgba(0, 255, 159, 0.8)" : "rgba(0, 255, 159, 0.4)"; // Lighter
+                // Draw node with pulsing effect
+                const isNearMouse = distToMouse < 250;
+                const nodeSize = isNearMouse ? 5 + pulse : 3 + pulse * 0.5;
+                const nodeOpacity = isNearMouse ? 0.9 : 0.5;
+
+                ctx.fillStyle = `rgba(0, 255, 159, ${nodeOpacity})`;
                 ctx.beginPath();
                 ctx.arc(node.x, node.y, nodeSize, 0, Math.PI * 2);
                 ctx.fill();
 
-                if (distToMouse < 200) {
-                    ctx.shadowBlur = 12;
-                    ctx.shadowColor = "rgba(0, 255, 159, 0.5)";
+                // Enhanced glow for nodes near mouse
+                if (isNearMouse) {
+                    const glowIntensity = (250 - distToMouse) / 250;
+                    ctx.shadowBlur = 20 * glowIntensity;
+                    ctx.shadowColor = `rgba(0, 255, 159, ${glowIntensity})`;
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y, nodeSize, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.shadowBlur = 0;
                 }
