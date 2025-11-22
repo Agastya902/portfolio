@@ -24,28 +24,35 @@ export default function InteractiveBackground() {
         if (!ctx) return;
 
         const resizeCanvas = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = document.documentElement.scrollHeight; // Full page height
+            const parent = canvas.parentElement;
+            if (parent) {
+                canvas.width = parent.clientWidth;
+                canvas.height = parent.clientHeight;
+            }
+            initParticles();
         };
 
         // Update canvas height on scroll (in case content height changes)
         const handleScroll = () => {
-            resizeCanvas();
+            const parent = canvas.parentElement;
+            if (parent && parent.clientHeight !== canvas.height) {
+                canvas.height = parent.clientHeight;
+            }
         };
         window.addEventListener("scroll", handleScroll);
 
         // Initialize particles once
         const initParticles = () => {
             const particles: Particle[] = [];
-            const particleCount = Math.floor((canvas.width * canvas.height) / 8000); // More particles
+            const particleCount = Math.floor((canvas.width * canvas.height) / 15000); // Adjusted density for larger area
 
             for (let i = 0; i < particleCount; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.8, // Increased movement speed
-                    vy: (Math.random() - 0.5) * 0.8,
-                    radius: Math.random() * 2 + 1.5, // Bigger particles (1.5-3.5px)
+                    vx: (Math.random() - 0.5) * 0.5, // Slower, more subtle movement
+                    vy: (Math.random() - 0.5) * 0.5,
+                    radius: Math.random() * 2 + 1,
                 });
             }
             particlesRef.current = particles;
@@ -53,14 +60,13 @@ export default function InteractiveBackground() {
 
         // Initial setup
         resizeCanvas();
-        initParticles();
         window.addEventListener("resize", resizeCanvas);
 
         const handleMouseMove = (e: MouseEvent) => {
-            // pageX/Y are relative to the whole document
+            const rect = canvas.getBoundingClientRect();
             mouseRef.current = {
-                x: e.pageX,
-                y: e.pageY,
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
             };
         };
 
@@ -68,8 +74,7 @@ export default function InteractiveBackground() {
 
         // Animation loop
         const animate = () => {
-            ctx.fillStyle = "rgba(2, 6, 23, 0.08)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear instead of fillRect for transparency
 
             const mouse = mouseRef.current;
             const particles = particlesRef.current;
@@ -82,8 +87,8 @@ export default function InteractiveBackground() {
 
                 if (distToMouse < 200) {
                     const force = (200 - distToMouse) / 200;
-                    particle.vx -= (dx / distToMouse) * force * 0.3;
-                    particle.vy -= (dy / distToMouse) * force * 0.3;
+                    particle.vx -= (dx / distToMouse) * force * 0.2;
+                    particle.vy -= (dy / distToMouse) * force * 0.2;
                 }
 
                 // Update position
@@ -91,8 +96,8 @@ export default function InteractiveBackground() {
                 particle.y += particle.vy;
 
                 // Damping
-                particle.vx *= 0.96;
-                particle.vy *= 0.96;
+                particle.vx *= 0.98;
+                particle.vy *= 0.98;
 
                 // Wrap around edges
                 if (particle.x < 0) particle.x = canvas.width;
@@ -108,7 +113,7 @@ export default function InteractiveBackground() {
                     const maxDistance = 150;
 
                     if (distance < maxDistance) {
-                        const opacity = (1 - distance / maxDistance) * 0.25; // More visible lines
+                        const opacity = (1 - distance / maxDistance) * 0.2;
 
                         ctx.strokeStyle = `rgba(0, 255, 159, ${opacity})`;
                         ctx.lineWidth = 1;
@@ -116,42 +121,14 @@ export default function InteractiveBackground() {
                         ctx.moveTo(particle.x, particle.y);
                         ctx.lineTo(otherParticle.x, otherParticle.y);
                         ctx.stroke();
-
-                        // Glow near mouse
-                        if (distToMouse < 150) {
-                            const glowOpacity = opacity * ((150 - distToMouse) / 150) * 0.6;
-                            ctx.strokeStyle = `rgba(0, 255, 159, ${glowOpacity})`;
-                            ctx.lineWidth = 1.5;
-                            ctx.shadowBlur = 10;
-                            ctx.shadowColor = "rgba(0, 255, 159, 0.5)";
-                            ctx.beginPath();
-                            ctx.moveTo(particle.x, particle.y);
-                            ctx.lineTo(otherParticle.x, otherParticle.y);
-                            ctx.stroke();
-                            ctx.shadowBlur = 0;
-                        }
                     }
                 });
 
                 // Draw particle
-                const isNearMouse = distToMouse < 150;
-                const particleOpacity = isNearMouse ? 0.8 : 0.5;
-
-                ctx.fillStyle = `rgba(0, 255, 159, ${particleOpacity})`;
+                ctx.fillStyle = `rgba(0, 255, 159, 0.4)`;
                 ctx.beginPath();
                 ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
                 ctx.fill();
-
-                // Glow on nearby particles
-                if (isNearMouse) {
-                    const glowIntensity = (150 - distToMouse) / 150;
-                    ctx.shadowBlur = 12 * glowIntensity;
-                    ctx.shadowColor = `rgba(0, 255, 159, ${glowIntensity * 0.7})`;
-                    ctx.beginPath();
-                    ctx.arc(particle.x, particle.y, particle.radius + 1, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.shadowBlur = 0;
-                }
             });
 
             animationRef.current = requestAnimationFrame(animate);
@@ -172,7 +149,7 @@ export default function InteractiveBackground() {
     return (
         <canvas
             ref={canvasRef}
-            className="fixed inset-0 pointer-events-none -z-10"
+            className="absolute inset-0 pointer-events-none -z-10"
             style={{ background: "transparent" }}
         />
     );
