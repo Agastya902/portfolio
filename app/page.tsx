@@ -154,7 +154,7 @@ export default function Home() {
           <section id="about" className="scroll-mt-24">
             <ScrollReveal>
               <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
-                <GlitchText text="ABOUT ME" />
+                ABOUT ME
               </h2>
               <div className="grid md:grid-cols-2 gap-8">
                 <GlassCard className="h-full">
@@ -181,7 +181,7 @@ export default function Home() {
           <section id="experience" className="scroll-mt-24">
             <ScrollReveal>
               <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
-                <GlitchText text="EXPERIENCE" />
+                EXPERIENCE
               </h2>
               <div className="space-y-6">
                 <GlassCard
@@ -236,7 +236,7 @@ export default function Home() {
           <section id="projects" className="scroll-mt-24">
             <ScrollReveal>
               <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
-                <GlitchText text="PROJECTS" />
+                PROJECTS
               </h2>
               <div className="grid md:grid-cols-2 gap-6">
                 <GlassCard
@@ -274,7 +274,7 @@ export default function Home() {
           <section className="scroll-mt-24">
             <ScrollReveal>
               <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
-                <GlitchText text="TIMELINE" />
+                TIMELINE
               </h2>
               <Timeline />
             </ScrollReveal>

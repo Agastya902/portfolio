@@ -41,8 +41,8 @@ export default function Navbar() {
     return (
         <nav className="fixed top-0 left-0 w-full z-40 bg-cyber-black/80 backdrop-blur-md border-b border-white/5">
             <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-                <span className="text-xl font-bold font-heading tracking-wider text-white">
-                    AGASTYA<span className="text-cyber-green">.DEV</span>
+                <span className="text-xl font-bold font-heading tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyber-green via-emerald-400 to-cyan-500">
+                    AS
                 </span>
 
                 <div className="hidden md:flex gap-8">
