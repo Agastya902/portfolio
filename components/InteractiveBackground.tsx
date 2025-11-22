@@ -5,8 +5,10 @@ import { useEffect, useRef } from "react";
 interface Particle {
     x: number;
     y: number;
-    vx: number;
-    vy: number;
+    vx: number; // Interaction velocity
+    vy: number; // Interaction velocity
+    baseVx: number; // Constant drift velocity
+    baseVy: number; // Constant drift velocity
     radius: number;
 }
 
@@ -50,8 +52,10 @@ export default function InteractiveBackground() {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5,
+                    vx: 0,
+                    vy: 0,
+                    baseVx: (Math.random() - 0.5) * 0.3, // Slow constant drift
+                    baseVy: (Math.random() - 0.5) * 0.3, // Slow constant drift
                     radius: Math.random() * 2 + 1,
                 });
             }
@@ -91,13 +95,13 @@ export default function InteractiveBackground() {
                     particle.vy -= (dy / distToMouse) * force * 0.2;
                 }
 
-                // Update position
-                particle.x += particle.vx;
-                particle.y += particle.vy;
+                // Update position with both interaction velocity and base drift
+                particle.x += particle.vx + particle.baseVx;
+                particle.y += particle.vy + particle.baseVy;
 
-                // Damping
-                particle.vx *= 0.98;
-                particle.vy *= 0.98;
+                // Damping only for interaction velocity
+                particle.vx *= 0.95;
+                particle.vy *= 0.95;
 
                 // Wrap around edges
                 if (particle.x < 0) particle.x = canvas.width;
