@@ -36,6 +36,7 @@ const timelineData: TimelineEvent[] = [
         date: "2022 - 2026",
         description: "Relevant Coursework: Data Analysis, Software Tools, Theory of Computability, Computer Vision, Deep Learning",
         type: "education",
+        logo: "/logos/ucsd.png",
     },
     {
         id: "playar",
@@ -44,6 +45,7 @@ const timelineData: TimelineEvent[] = [
         date: "Jan 2025 - Present",
         description: "Cricket ball tracking with YOLOv11, MediaPipe gesture estimation, TensorRT optimization",
         type: "work",
+        logo: "placeholder", // User will provide later
         children: [
             {
                 id: "playar-project",
@@ -61,6 +63,7 @@ const timelineData: TimelineEvent[] = [
         date: "Jul - Sep 2025",
         description: "Built farming datasets, generated 100k+ synthetic images in Blender",
         type: "work",
+        logo: "/logos/tech-mahindra.png",
         children: [
             {
                 id: "smartvision",
@@ -78,6 +81,7 @@ const timelineData: TimelineEvent[] = [
         date: "Jun - Aug 2024",
         description: "Real-time object detection with YOLOv5, integrated into security infrastructure",
         type: "work",
+        logo: "placeholder", // User will provide later
     },
     {
         id: "ucsd-aio",
@@ -86,6 +90,7 @@ const timelineData: TimelineEvent[] = [
         date: "Mar 2025 - Present",
         description: "Facilitated group meetings, strengthened communication and leadership",
         type: "work",
+        logo: "/logos/ucsd.png",
     },
 ];
 
@@ -142,11 +147,19 @@ export default function Timeline() {
                     >
                         {/* Node */}
                         <div
-                            className={`absolute left-0 md:left-1/2 top-4 -translate-x-1/2 w-8 h-8 rounded-full border-2 ${getTypeColor(
+                            className={`absolute left-0 md:left-1/2 top-4 -translate-x-1/2 w-12 h-12 rounded-full border-2 ${getTypeColor(
                                 event.type
-                            )} flex items-center justify-center text-lg z-10 backdrop-blur-md`}
+                            )} flex items-center justify-center z-10 backdrop-blur-md overflow-hidden bg-white/90`}
                         >
-                            {getTypeIcon(event.type)}
+                            {event.logo && event.logo !== "placeholder" ? (
+                                <img
+                                    src={event.logo}
+                                    alt={`${event.title} logo`}
+                                    className="w-10 h-10 object-contain p-1"
+                                />
+                            ) : (
+                                <span className="text-lg">{getTypeIcon(event.type)}</span>
+                            )}
                         </div>
 
                         {/* Content card */}
