@@ -11,16 +11,16 @@ export default function Hero() {
                 loop
                 muted
                 playsInline
-                className="absolute top-0 left-0 w-full h-full object-cover z-0"
+                className="absolute top-0 left-0 w-full h-full object-cover z-10"
             >
                 <source src="/hero-background.mp4" type="video/mp4" />
             </video>
 
             {/* Overlay */}
-            <div className="absolute top-0 left-0 w-full h-full bg-cyber-black/70 z-10" />
+            <div className="absolute top-0 left-0 w-full h-full bg-cyber-black/70 z-20" />
 
             {/* Content */}
-            <div className="relative z-20 text-center px-4 max-w-4xl mx-auto">
+            <div className="relative z-30 text-center px-4 max-w-4xl mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

@@ -26,7 +26,6 @@ export default function InteractiveBackground() {
         const resizeCanvas = () => {
             canvas.width = window.innerWidth;
             canvas.height = document.documentElement.scrollHeight; // Full page height
-            initParticles();
         };
 
         // Update canvas height on scroll (in case content height changes)
@@ -35,6 +34,7 @@ export default function InteractiveBackground() {
         };
         window.addEventListener("scroll", handleScroll);
 
+        // Initialize particles once
         const initParticles = () => {
             const particles: Particle[] = [];
             const particleCount = Math.floor((canvas.width * canvas.height) / 8000); // More particles
@@ -48,11 +48,12 @@ export default function InteractiveBackground() {
                     radius: Math.random() * 2 + 1.5, // Bigger particles (1.5-3.5px)
                 });
             }
-
             particlesRef.current = particles;
         };
 
+        // Initial setup
         resizeCanvas();
+        initParticles();
         window.addEventListener("resize", resizeCanvas);
 
         const handleMouseMove = (e: MouseEvent) => {
@@ -171,7 +172,7 @@ export default function InteractiveBackground() {
     return (
         <canvas
             ref={canvasRef}
-            className="fixed inset-0 pointer-events-none z-0"
+            className="fixed inset-0 pointer-events-none -z-10"
             style={{ background: "transparent" }}
         />
     );
