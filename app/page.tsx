@@ -150,7 +150,14 @@ export default function Home() {
 
         <div className="max-w-6xl mx-auto space-y-20 relative z-10">
           {/* About Section */}
-          <About />
+          <section id="about" className="scroll-mt-24">
+            <ScrollReveal>
+              <h2 className="text-3xl md:text-4xl font-bold font-heading text-cyber-green mb-8 tracking-wider">
+                ABOUT ME
+              </h2>
+              <About />
+            </ScrollReveal>
+          </section>
 
           {/* Experience Section */}
           <section id="experience" className="scroll-mt-24">
