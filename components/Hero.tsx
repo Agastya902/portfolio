@@ -34,7 +34,7 @@ export default function Hero() {
                         Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-green via-emerald-400 to-cyan-500">Agastya</span>
                     </h1>
                     <p className="text-gray-200 text-base md:text-lg max-w-xl mx-auto mb-8 leading-relaxed font-light">
-                        Building intelligent systems that see and understand the world
+                        I build intelligent systems that see and understand the world
                     </p>
 
                     <div className="flex flex-col md:flex-row gap-4 justify-center items-center">

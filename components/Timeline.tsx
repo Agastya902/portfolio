@@ -15,37 +15,13 @@ interface TimelineEvent {
 
 const timelineData: TimelineEvent[] = [
     {
-        id: "school",
-        title: "High School",
-        date: "2018 - 2022",
-        description: "Academic foundation in mathematics and computer science",
-        type: "education",
-    },
-    {
-        id: "shooter",
-        title: "Competitive Shooter",
-        subtitle: "Esports / Athletics",
-        date: "2019 - 2022",
-        description: "Developed discipline, strategic thinking, and performance under pressure",
-        type: "achievement",
-    },
-    {
-        id: "ucsd",
-        title: "UC San Diego",
-        subtitle: "B.S. Mathematics-Computer Science",
-        date: "2022 - 2026",
-        description: "Relevant Coursework: Data Analysis, Software Tools, Theory of Computability, Computer Vision, Deep Learning",
-        type: "education",
-        logo: "/logos/ucsd.png",
-    },
-    {
         id: "playar",
         title: "Playar Inc.",
         subtitle: "Computer Vision Intern",
         date: "Jan 2025 - Present",
         description: "Cricket ball tracking with YOLOv11, MediaPipe gesture estimation, TensorRT optimization",
         type: "work",
-        logo: "placeholder", // User will provide later
+        logo: "placeholder",
         children: [
             {
                 id: "playar-project",
@@ -57,10 +33,19 @@ const timelineData: TimelineEvent[] = [
         ],
     },
     {
+        id: "ucsd-aio",
+        title: "UCSD - Academic Integrity Office",
+        subtitle: "Peer Educator",
+        date: "Mar 2025 - Present",
+        description: "Facilitated group meetings, strengthened communication and leadership",
+        type: "work",
+        logo: "/logos/ucsd.png",
+    },
+    {
         id: "tech-mahindra",
         title: "Tech Mahindra",
         subtitle: "Computer Vision Intern",
-        date: "Jul - Sep 2025",
+        date: "Jul - Sep 2024",
         description: "Built farming datasets, generated 100k+ synthetic images in Blender",
         type: "work",
         logo: "/logos/tech-mahindra.png",
@@ -81,16 +66,31 @@ const timelineData: TimelineEvent[] = [
         date: "Jun - Aug 2024",
         description: "Real-time object detection with YOLOv5, integrated into security infrastructure",
         type: "work",
-        logo: "placeholder", // User will provide later
+        logo: "placeholder",
     },
     {
-        id: "ucsd-aio",
-        title: "UCSD - Academic Integrity Office",
-        subtitle: "Peer Educator",
-        date: "Mar 2025 - Present",
-        description: "Facilitated group meetings, strengthened communication and leadership",
-        type: "work",
+        id: "ucsd",
+        title: "UC San Diego",
+        subtitle: "B.S. Mathematics-Computer Science",
+        date: "2022 - 2026",
+        description: "Relevant Coursework: Data Analysis, Software Tools, Theory of Computability, Computer Vision, Deep Learning",
+        type: "education",
         logo: "/logos/ucsd.png",
+    },
+    {
+        id: "shooter",
+        title: "Competitive Shooter",
+        subtitle: "Esports / Athletics",
+        date: "2019 - 2022",
+        description: "Developed discipline, strategic thinking, and performance under pressure",
+        type: "achievement",
+    },
+    {
+        id: "school",
+        title: "High School",
+        date: "2018 - 2022",
+        description: "Academic foundation in mathematics and computer science",
+        type: "education",
     },
 ];
 
