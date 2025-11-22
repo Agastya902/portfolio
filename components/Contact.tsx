@@ -24,7 +24,7 @@ export default function Contact() {
                     Accept: "application/json",
                 },
                 body: JSON.stringify({
-                    access_key: "YOUR_WEB3FORMS_KEY", // User needs to get this from web3forms.com
+                    access_key: "e33fa976-4730-42bc-b6cb-14f7f65d5151",
                     name: formData.name,
                     email: formData.email,
                     message: formData.message,
@@ -71,17 +71,17 @@ export default function Contact() {
 
                             <div className="space-y-4">
                                 <a
-                                    href="mailto:your.email@example.com"
+                                    href="mailto:agastya@example.com"
                                     className="flex items-center gap-3 text-gray-300 hover:text-cyber-green transition-colors group"
                                 >
                                     <div className="w-10 h-10 rounded-full bg-cyber-green/10 flex items-center justify-center group-hover:bg-cyber-green/20 transition-colors">
                                         <Mail size={20} className="text-cyber-green" />
                                     </div>
-                                    <span>your.email@example.com</span>
+                                    <span>agastya@example.com</span>
                                 </a>
 
                                 <a
-                                    href="https://linkedin.com/in/yourprofile"
+                                    href="https://linkedin.com/in/agastya"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center gap-3 text-gray-300 hover:text-cyber-green transition-colors group"
@@ -93,7 +93,7 @@ export default function Contact() {
                                 </a>
 
                                 <a
-                                    href="https://github.com/yourusername"
+                                    href="https://github.com/Agastya902"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center gap-3 text-gray-300 hover:text-cyber-green transition-colors group"
