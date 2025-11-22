@@ -28,15 +28,14 @@ export default function Hero() {
                     transition={{ duration: 0.8 }}
                     className="glass-panel p-8 md:p-12 rounded-2xl border-cyber-green/30 bg-cyber-black/40 backdrop-blur-xl"
                 >
-                    <h2 className="text-cyber-green font-mono text-sm md:text-base mb-4 tracking-[0.2em]">
-                        SYSTEM ONLINE // WELCOME USER
+                    <h2 className="text-cyber-green font-mono text-xs md:text-sm mb-3 tracking-[0.3em] uppercase">
+                        Computer Vision Engineer
                     </h2>
-                    <h1 className="text-5xl md:text-7xl font-bold font-heading mb-6 leading-tight">
-                        Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-green to-emerald-600">Agastya</span>
+                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-heading mb-4 leading-tight">
+                        Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-green via-emerald-400 to-cyan-500">Agastya</span>
                     </h1>
-                    <p className="text-gray-100 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-                        Computer Vision Engineer specializing in deep learning,
-                        3D reconstruction, and real-time perception systems.
+                    <p className="text-gray-200 text-base md:text-lg max-w-xl mx-auto mb-8 leading-relaxed font-light">
+                        Building intelligent systems that see and understand the world
                     </p>
 
                     <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
