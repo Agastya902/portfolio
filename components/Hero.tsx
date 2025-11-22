@@ -1,11 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Mail, Twitter, Instagram, Linkedin } from "lucide-react";
 
 export default function Hero() {
     return (
-        <section className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-cyber-black">\n            {/* Video Background */}
+        <section className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-cyber-black">
+            {/* Video Background */}
             <video
                 autoPlay
                 loop
@@ -36,6 +37,25 @@ export default function Hero() {
                     <p className="text-gray-200 text-base md:text-lg max-w-xl mx-auto mb-8 leading-relaxed font-light">
                         I build intelligent systems that see and understand the world
                     </p>
+
+                    <div className="flex flex-wrap gap-6 justify-center items-center mb-8">
+                        <a href="mailto:your.email@example.com" className="flex items-center gap-2 text-gray-300 hover:text-cyber-green transition-colors duration-300 group">
+                            <Mail className="w-5 h-5" />
+                            <span className="text-sm font-mono uppercase tracking-wider group-hover:underline decoration-cyber-green/50 underline-offset-4">Email</span>
+                        </a>
+                        <a href="#" className="flex items-center gap-2 text-gray-300 hover:text-cyber-green transition-colors duration-300 group">
+                            <Twitter className="w-5 h-5" />
+                            <span className="text-sm font-mono uppercase tracking-wider group-hover:underline decoration-cyber-green/50 underline-offset-4">Twitter</span>
+                        </a>
+                        <a href="#" className="flex items-center gap-2 text-gray-300 hover:text-cyber-green transition-colors duration-300 group">
+                            <Instagram className="w-5 h-5" />
+                            <span className="text-sm font-mono uppercase tracking-wider group-hover:underline decoration-cyber-green/50 underline-offset-4">Instagram</span>
+                        </a>
+                        <a href="#" className="flex items-center gap-2 text-gray-300 hover:text-cyber-green transition-colors duration-300 group">
+                            <Linkedin className="w-5 h-5" />
+                            <span className="text-sm font-mono uppercase tracking-wider group-hover:underline decoration-cyber-green/50 underline-offset-4">LinkedIn</span>
+                        </a>
+                    </div>
 
                     <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
                         <a
