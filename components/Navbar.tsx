@@ -13,6 +13,7 @@ export default function Navbar() {
                         <a href="#experience" className="text-sm md:text-base font-medium text-transparent bg-clip-text bg-gradient-to-r from-cyber-green via-emerald-400 to-cyan-500 hover:from-emerald-400 hover:via-cyan-500 hover:to-cyber-green transition-all duration-300">Experience</a>
                         <a href="#projects" className="text-sm md:text-base font-medium text-transparent bg-clip-text bg-gradient-to-r from-cyber-green via-emerald-400 to-cyan-500 hover:from-emerald-400 hover:via-cyan-500 hover:to-cyber-green transition-all duration-300">Projects</a>
                         <a href="#timeline" className="text-sm md:text-base font-medium text-transparent bg-clip-text bg-gradient-to-r from-cyber-green via-emerald-400 to-cyan-500 hover:from-emerald-400 hover:via-cyan-500 hover:to-cyber-green transition-all duration-300">Journey</a>
+                        <a href="#contact" className="text-sm md:text-base font-medium text-transparent bg-clip-text bg-gradient-to-r from-cyber-green via-emerald-400 to-cyan-500 hover:from-emerald-400 hover:via-cyan-500 hover:to-cyber-green transition-all duration-300">Contact</a>
                     </div>
                 </div>
             </div>

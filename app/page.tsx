@@ -7,6 +7,7 @@ import InteractiveBackground from "@/components/InteractiveBackground";
 import GlassCard from "@/components/GlassCard";
 import Modal from "@/components/Modal";
 import Timeline from "@/components/Timeline";
+import Contact from "@/components/Contact";
 
 type ModalContent = "playar" | "techmahindra" | "vertexplus" | "smartvision" | "intellirest" | null;
 
@@ -269,6 +270,9 @@ export default function Home() {
 
           {/* Timeline Section */}
           <Timeline />
+
+          {/* Contact Section */}
+          <Contact />
         </div>
       </div>
 
