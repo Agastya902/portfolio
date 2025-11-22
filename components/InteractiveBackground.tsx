@@ -44,13 +44,13 @@ export default function InteractiveBackground() {
         // Initialize particles once
         const initParticles = () => {
             const particles: Particle[] = [];
-            const particleCount = Math.floor((canvas.width * canvas.height) / 15000); // Adjusted density for larger area
+            const particleCount = Math.floor((canvas.width * canvas.height) / 10000); // Increased density
 
             for (let i = 0; i < particleCount; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.5, // Slower, more subtle movement
+                    vx: (Math.random() - 0.5) * 0.5,
                     vy: (Math.random() - 0.5) * 0.5,
                     radius: Math.random() * 2 + 1,
                 });
@@ -74,7 +74,7 @@ export default function InteractiveBackground() {
 
         // Animation loop
         const animate = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear instead of fillRect for transparency
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             const mouse = mouseRef.current;
             const particles = particlesRef.current;
@@ -149,7 +149,7 @@ export default function InteractiveBackground() {
     return (
         <canvas
             ref={canvasRef}
-            className="absolute inset-0 pointer-events-none -z-10"
+            className="absolute inset-0 pointer-events-none z-0"
             style={{ background: "transparent" }}
         />
     );
