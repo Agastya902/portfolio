@@ -24,16 +24,16 @@ export default function InteractiveBackground() {
         if (!ctx) return;
 
         const resizeCanvas = () => {
-            const parent = canvas.parentElement;
-            if (parent) {
-                canvas.width = parent.offsetWidth;
-                canvas.height = parent.scrollHeight; // Full content height, not just viewport
-            } else {
-                canvas.width = window.innerWidth;
-                canvas.height = document.documentElement.scrollHeight;
-            }
+            canvas.width = window.innerWidth;
+            canvas.height = document.documentElement.scrollHeight; // Full page height
             initParticles();
         };
+
+        // Update canvas height on scroll (in case content height changes)
+        const handleScroll = () => {
+            resizeCanvas();
+        };
+        window.addEventListener("scroll", handleScroll);
 
         const initParticles = () => {
             const particles: Particle[] = [];
@@ -56,10 +56,10 @@ export default function InteractiveBackground() {
         window.addEventListener("resize", resizeCanvas);
 
         const handleMouseMove = (e: MouseEvent) => {
-            // pageX and pageY are already relative to the full document
+            // pageX/Y are relative to the whole document
             mouseRef.current = {
                 x: e.pageX,
-                y: e.pageY
+                y: e.pageY,
             };
         };
 
@@ -160,6 +160,7 @@ export default function InteractiveBackground() {
 
         return () => {
             window.removeEventListener("resize", resizeCanvas);
+            window.removeEventListener("scroll", handleScroll);
             window.removeEventListener("mousemove", handleMouseMove);
             if (animationRef.current) {
                 cancelAnimationFrame(animationRef.current);
@@ -170,7 +171,7 @@ export default function InteractiveBackground() {
     return (
         <canvas
             ref={canvasRef}
-            className="absolute inset-0 pointer-events-none z-0"
+            className="fixed inset-0 pointer-events-none z-0"
             style={{ background: "transparent" }}
         />
     );
