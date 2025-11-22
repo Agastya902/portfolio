@@ -57,18 +57,12 @@ export default function Hero() {
                         </a>
                     </div>
 
-                    <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
+                    <div className="flex justify-center items-center">
                         <a
-                            href="#projects"
-                            className="px-8 py-3 bg-cyber-green/20 border border-cyber-green text-cyber-green hover:bg-cyber-green hover:text-cyber-black transition-all duration-300 font-medium tracking-wide rounded-sm uppercase text-sm backdrop-blur-sm"
+                            href="#about"
+                            className="px-8 py-3 border border-cyber-green text-cyber-green hover:bg-cyber-green hover:text-cyber-black transition-all duration-300 font-medium tracking-wide rounded-sm uppercase text-sm backdrop-blur-sm"
                         >
-                            View Projects
-                        </a>
-                        <a
-                            href="#contact"
-                            className="px-8 py-3 text-gray-300 hover:text-white transition-colors text-sm uppercase tracking-wide hover:bg-white/5 rounded-sm"
-                        >
-                            Get in Touch
+                            Learn more
                         </a>
                     </div>
                 </motion.div>
